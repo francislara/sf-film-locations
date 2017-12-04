@@ -20,6 +20,13 @@ In addition, this project will include:
 
 - [ ] An About modal describing what the information being displayed is
 
+### Wireframes
+
+This app will have a large map display with dots over each of the locations, with filters on one side, and info on the selected movie on the right.
+
+![wireframes](wireframe.png)
+
+
 
 ### Architecture and Technologies
 
