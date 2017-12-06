@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <style>
+
+    svg {
+      background: #efefef;
+    }
+
+    .neighborhood {
+      fill: #9c9c9c;
+      stroke: #333333;
+    }
+    
+    .neighborhood:hover {
+      fill: yellow;
+    }
+  
+  </style>
+
+  <!-- <link rel="stylesheet" type="text/css" href="./stylesheets/styles.css"> -->
+  
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://d3js.org/d3-array.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+</head>
+
+<body>
+  <script>
+    
+    var height = 900,
+      width = 1100;
+    
+
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("height", height)
+      .attr("width", width)
+      .append("g");
+
+    d3.queue()
+      .defer(d3.json, "NeighborhoodsTopoJSON.json")
+      .await(ready);
+
+    var projection = d3.geoAlbersUsa()
+      .translate([ width * 80 , height * 9.8])
+      .scale([251000]);
+    
+
+
+    var path = d3.geoPath()
+      .projection(projection);
+
+
+  function ready (error, data) {
+
+    if(error) throw error;
+
+    var neighborhoods = topojson.feature(data, data.objects["geo_export_60f2fa80-7afa-4824-a575-a01c3d2c6d59"]).features;
+
+    // console.log(data);
+
+    // svg.append("div")
+    //   .attr("class", "neighborhood")
+    //     .selectAll("path")
+    //     .data(neighborhoods)
+    //     .enter()
+    //     .append("path")
+    //     .attr("d", path)
+
+    svg.selectAll(".neighborhood")
+      .data(neighborhoods)
+      .enter().append("path")
+      .attr("class", "neighborhood")
+      .attr("d", path)
+      .attr("fill", "#cccccc")
+      .attr("stroke", "#333333")
+    
+
+
+
+    // console.log(neighborhoods);
+  }
+  
+  </script>
+
+  <!-- <script src="javascript_files/bundle.js"></script> -->
+</body>
+
+</html>

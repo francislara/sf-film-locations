@@ -1,0 +1,26 @@
+{
+  "name": "sf-film-locations",
+  "version": "1.0.0",
+  "description": "SF Film Locations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francislara/sf-film-locations.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/francislara/sf-film-locations/issues"
+  },
+  "homepage": "https://github.com/francislara/sf-film-locations#readme",
+  "dependencies": {
+    "d3": "^4.12.0",
+    "d3-geo": "^1.9.0",
+    "topojson": "^3.0.2"
+  }
+}
