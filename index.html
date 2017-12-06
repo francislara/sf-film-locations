@@ -77,7 +77,11 @@
     svg.selectAll(".neighborhood")
       .data(neighborhoods)
       .enter().append("path")
-      .attr("class", "neighborhood")
+      .attr("class", (d) => {
+        let nhood = d.properties.nhood.replace(/\s+/g, '-');;
+        console.log(nhood);
+        return `neighborhood ${nhood}`;
+      })
       .attr("d", path)
       .attr("fill", "#cccccc")
       .attr("stroke", "#333333")
