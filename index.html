@@ -21,8 +21,22 @@
     } */
     
     .neighborhood:hover {
-      fill: yellow;
+      fill-opacity: .5;
+      stroke: black;
     }
+
+    div.tooltip {	
+      position: absolute;			
+      text-align: center;			
+      width: 80px;					
+      height: 50px;					
+      padding: 2px;				
+      font: 12px sans-serif;		
+      background: lightsteelblue;	
+      border: 0px;		
+      border-radius: 8px;			
+      pointer-events: none;			
+  }
   
   </style>
 
@@ -38,6 +52,48 @@
 <body>
   <script>
 
+    let total = 1124;
+
+    let counts = {
+      "financial-district/south-beach": 86,
+      "mission": 75,
+      "haight-ashbury": 24,
+      "north-beach": 160,
+      "nob-hill": 96,
+      "south-of-market": 67,
+      "tenderloin": 93,
+      "potrero-hill": 38,
+      "chinatown": 51,
+      "presidio": 21,
+      "mission-bay": 19,
+      "sunset/parkside": 8,
+      "seacliff": 13,
+      "marina": 35, 
+      "treasure-island": 17,
+      "excelsior": 6,
+      "presidio-heights": 7,
+      "bernal-heights": 10,
+      "russian-hill": 40,
+      "golden-gate-park": 21,
+      "pacific-heights": 35,
+      "western-addition": 36,
+      "west-of-twin-peaks": 11,
+      "bayview-hunters-point": 13,
+      "lakeshore": 4,
+      "lone-mountain/usf": 3,
+      "castro/upper-market": 67,
+      "inner-richmond": 8,
+      "oceanview/merced/ingleside": 3,
+      "twin-peaks": 9,
+      "inner-sunset": 4,
+      "japantown": 1,
+      "hayes-valley": 21,
+      "noe-valley": 8,
+      "outer-richmond": 9,
+      "glen-park": 2,
+      "outer-mission": 3
+    }
+
     let colors = {
       0: "#ffffcc",
       1: "#c7e9b4",
@@ -50,6 +106,10 @@
     
     var height = 900,
       width = 1100;
+
+    var div = d3.select("body").append("div")	
+      .attr("class", "tooltip")				
+      .style("opacity", 0);
     
 
     var svg = d3.select("body")
@@ -93,12 +153,48 @@
       .enter().append("path")
       .attr("class", (d) => {
         let nhood = d.properties.nhood.replace(/\s+/g, '-').toLowerCase();
-        console.log(nhood);
+        // console.log(nhood);
         return `neighborhood ${nhood}`;
       })
       .attr("d", path)
-      .attr("fill", ())
-      .attr("stroke", "#333333")
+      .on("mouseover", (d) => {
+        div.transition()
+          .duration(200)
+          .style("opacity", .9);
+        let nhood = d.properties.nhood.replace(/\s+/g, '-').toLowerCase();
+        let filmcount;
+        if(counts[nhood]) {
+          filmcount = counts[nhood];
+        } else {
+          filmcount = 0;
+        }
+        div.html(d.properties.nhood + "<br/>" + "Film Count:" + filmcount)
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", (d) => {
+        div.transition()
+          .duration(500)
+          .style("opacity", 0);
+      })
+      // .attr("nhood-name", (d) => {
+      //   return d.properties.nhood;
+      // })
+      // .attr("film-count", (d) => {
+      //   let nhood = d.properties.nhood.replace(/\s+/g, '-').toLowerCase();
+      //   return counts[nhood];
+      // })
+      .attr("fill", (d) => {
+        let nhood = d.properties.nhood.replace(/\s+/g, '-').toLowerCase();
+        // console.log(colors[(Math.floor((counts[nhood]/161) * 7))])
+        let color = colors[(Math.floor((counts[nhood]/161) * 7))]
+        if(color) {
+          return color;
+        } else {
+          return "#ffffcc";
+        }
+      })
+      .attr("stroke", "#444444")
     
 
 
