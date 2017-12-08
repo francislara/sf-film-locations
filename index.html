@@ -4,17 +4,21 @@
 <head>
   <meta charset="utf-8">
   <title></title>
-
+  
   <style>
 
     svg {
       background: #efefef;
     }
 
-    .neighborhood {
+    /* .neighborhood {
       fill: #9c9c9c;
       stroke: #333333;
-    }
+    } */
+
+    /* .mission-bay {
+      fill: #964493;
+    } */
     
     .neighborhood:hover {
       fill: yellow;
@@ -33,6 +37,16 @@
 
 <body>
   <script>
+
+    let colors = {
+      0: "#ffffcc",
+      1: "#c7e9b4",
+      2: "#7fcdbb",
+      3: "#41b6c4",
+      4: "#1d91c0",
+      5: "#225ea8",
+      6: "#0c2c84"
+    };
     
     var height = 900,
       width = 1100;
@@ -78,12 +92,12 @@
       .data(neighborhoods)
       .enter().append("path")
       .attr("class", (d) => {
-        let nhood = d.properties.nhood.replace(/\s+/g, '-');;
+        let nhood = d.properties.nhood.replace(/\s+/g, '-').toLowerCase();
         console.log(nhood);
         return `neighborhood ${nhood}`;
       })
       .attr("d", path)
-      .attr("fill", "#cccccc")
+      .attr("fill", ())
       .attr("stroke", "#333333")
     
 
@@ -91,6 +105,7 @@
 
     // console.log(neighborhoods);
   }
+
   
   </script>
 
